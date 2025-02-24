@@ -10,6 +10,7 @@ module net.iouhase.haarmonika {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens net.iouhase.haarmonika to javafx.fxml;
     exports net.iouhase.haarmonika;
