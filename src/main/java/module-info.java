@@ -13,4 +13,6 @@ module net.iouhase.haarmonika {
 
     opens net.iouhase.haarmonika to javafx.fxml;
     exports net.iouhase.haarmonika;
+    exports net.iouhase.haarmonika.model;
+    opens net.iouhase.haarmonika.model to javafx.fxml;
 }
