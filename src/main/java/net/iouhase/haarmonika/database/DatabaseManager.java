@@ -12,7 +12,7 @@ public class DatabaseManager {
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
-        connection = DriverManager.getConnection("jdbc:mysql://iouhase.net:3306", "user", "26Uj96MSlPMV4o3aHqIypWcu");
+        connection = DriverManager.getConnection("jdbc:mysql://iouhase.net:3306/hår", "user", "26Uj96MSlPMV4o3aHqIypWcu");
         return connection;
     }
 }
