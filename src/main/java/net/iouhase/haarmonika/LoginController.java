@@ -22,15 +22,15 @@ public class LoginController {
 
     @FXML
     public void login(ActionEvent event) throws IOException {
-        String login = useCase.checkUser(username.getText(), password.getText());
-        if (login.equals("OK")) {
+        boolean login = useCase.checkUser(username.getText(), password.getText());
+        if (login) {
             nextScene();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText(login);
+//            alert.setContentText(login);
             alert.showAndWait();
         }
     }
@@ -40,7 +40,7 @@ public class LoginController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
         Parent root = fxmlLoader.load();
         MainController mainController = fxmlLoader.getController();
-        mainController.setUser(username.getText());
+//        mainController.setUser(username.getText());
         Stage stage = (Stage) username.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
