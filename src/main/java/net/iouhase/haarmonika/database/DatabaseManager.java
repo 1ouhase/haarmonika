@@ -26,7 +26,8 @@ public class DatabaseManager {
     }
     private User user;
 
-    public User checkUser(String username, String pass) {
+    public Boolean checkUser(String username, String pass) {
+        Boolean ok;
         String sql = "SELECT * FROM logintest.user WHERE username=? AND password=?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -35,16 +36,17 @@ public class DatabaseManager {
             ResultSet resultSet = preparedStatement.executeQuery();
             System.out.println("checking database");
             if (resultSet.next()) {
-                String userName = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                user = new User(userName, password);
-                System.out.println(userName + ": OK");
-                return user;
+//                String userName = resultSet.getString("username");
+//                String password = resultSet.getString("password");
+//                user = new User(userName, password);
+//                System.out.println(userName + ": OK");
+                ok = true;
+                return ok;
             }
 
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return user;
+        return false;
     }
 }
