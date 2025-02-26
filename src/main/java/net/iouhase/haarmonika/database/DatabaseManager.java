@@ -1,5 +1,7 @@
 package net.iouhase.haarmonika.database;
 
+import net.iouhase.haarmonika.model.User;
+
 import java.sql.*;
 
 public class DatabaseManager {
@@ -21,5 +23,28 @@ public class DatabaseManager {
     }
 
     public static void editBooking() {
+    }
+    private User user;
+
+    public User checkUser(String username, String pass) {
+        String sql = "SELECT * FROM logintest.user WHERE username=? AND password=?";
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, pass);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("checking database");
+            if (resultSet.next()) {
+                String userName = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                user = new User(userName, password);
+                System.out.println(userName + ": OK");
+                return user;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return user;
     }
 }

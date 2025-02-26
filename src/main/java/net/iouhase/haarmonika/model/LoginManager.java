@@ -1,15 +1,17 @@
 package net.iouhase.haarmonika.model;
 
+import net.iouhase.haarmonika.database.DatabaseManager;
+
 public class LoginManager {
-    public String checkUser(String username, String password) {
-        DatabaseHandler databaseHandler = new databaseHandler();
+    public boolean checkUser(String username, String password) {
+        DatabaseManager databaseManager = new DatabaseManager();
         System.out.println("Checking user " + username + " with password " + password);
-        User user = databaseHandler.checkUser(username, password);
+        User user = databaseManager.checkUser(username, password);
         if (user != null) {
-            return "OK";
+            return (true);
         }
         else {
-            return "User not found";
+            return (false);
         }
     }
 }
