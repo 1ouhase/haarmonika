@@ -36,7 +36,7 @@ public class UseCase {
     public String removeUser(String username) {
         return DatabaseManager.removeUser(username);
     }
-    public String updateUser(String username, String password) {
-        return DatabaseManager.updateUser(username, password);
+    public String updateUser(String username, String password, String oldName) {
+        return DatabaseManager.updateUser(username, password, oldName);
     }
 }

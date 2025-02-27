@@ -30,6 +30,8 @@ public class AdminController {
         userList = useCase.getUsers();
         userObservableList.setAll(userList);
         userListView.setItems(userObservableList);
+        nameField.clear();
+        passwordField.clear();
     }
 
     public void onAddUserButtonClicked() {
@@ -50,13 +52,19 @@ public class AdminController {
         String username = userListView.getSelectionModel().getSelectedItem().toString();
         if (username != null) {
             textLabel.setText(useCase.removeUser(username));
+            initialize();
         }
     }
     public void onEditUserButtonClicked(ActionEvent actionEvent) {
+        String oldName = userListView.getSelectionModel().getSelectedItem().toString();
         if (!nameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
             String name = nameField.getText();
             String password = passwordField.getText();
-            useCase.updateUser(name, password);
+            textLabel.setText(useCase.updateUser(name, password, oldName));
+            initialize();
+        }
+        else {
+            nameField.setText(oldName);
         }
     }
 }

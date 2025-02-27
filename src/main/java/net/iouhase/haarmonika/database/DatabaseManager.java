@@ -139,12 +139,13 @@ public class DatabaseManager {
         }
         return "Bruger slettet";
     }
-    public static String updateUser(String username, String password) {
+    public static String updateUser(String username, String password, String oldName) {
         String sql = "update frisør set navn=?, password=? where navn=?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
+            preparedStatement.setString(3, oldName);
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
                 return (username + " updated");

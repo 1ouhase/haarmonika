@@ -11,4 +11,8 @@ public class MainController {
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
+
+    public void setUser(String userName){
+        welcomeText.setText(userName);
+    }
 }
