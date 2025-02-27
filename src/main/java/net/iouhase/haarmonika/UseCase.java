@@ -29,6 +29,7 @@ public class UseCase {
 //        }
 //        return users;
 //    }
+
     public String addUser(String username, String password) {
         return DatabaseManager.addUser(username, password);
     }
