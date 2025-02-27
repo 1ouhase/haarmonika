@@ -79,7 +79,7 @@ public class DatabaseManager {
 //        }
 //    }
     public static String addUser(String userName, String password) {
-        String sql = "insert into frisør (name, password) values (?, ?)";
+        String sql = "insert into frisør (navn, password) values (?, ?)";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, userName);
@@ -100,7 +100,7 @@ public class DatabaseManager {
 
     public static Boolean checkUser(String username, String pass) {
         Boolean ok;
-        String sql = "SELECT * FROM frisør WHERE username=? AND password=?";
+        String sql = "SELECT * FROM frisør WHERE navn=? AND password=?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);
@@ -122,7 +122,7 @@ public class DatabaseManager {
         return false;
     }
     public static String removeUser(String username) {
-        String sql = "DELETE FROM frisør WHERE username=?";
+        String sql = "DELETE FROM frisør WHERE navn=?";
         try(Connection connection = connect();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);
@@ -140,7 +140,7 @@ public class DatabaseManager {
         return "Bruger slettet";
     }
     public static String updateUser(String username, String password) {
-        String sql = "update frisør set name=?, password=? where username=?";
+        String sql = "update frisør set navn=?, password=? where navn=?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);

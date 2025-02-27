@@ -37,6 +37,7 @@ public class AdminController {
             String name = nameField.getText();
             String password = passwordField.getText();
             textLabel.setText(useCase.addUser(name, password));
+            initialize();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
