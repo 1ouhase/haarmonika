@@ -50,14 +50,14 @@ public class DatabaseManager {
 
 
     public static List<String> getUsers() {
-        String sql = "select * from users";
+        String sql = "select * from frisør";
         List<String> usernames = new ArrayList<>();
         try (Connection connection = connect();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
+                String name = resultSet.getString("navn");
                 usernames.add(name);
             }
         }catch (SQLException e) {

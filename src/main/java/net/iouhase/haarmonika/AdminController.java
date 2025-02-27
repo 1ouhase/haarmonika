@@ -18,7 +18,7 @@ public class AdminController {
     Label textLabel = new Label();
 
     @FXML
-    private ListView<User> userListView;
+    private ListView<String> userListView;
 
     @FXML
     private TextField nameField;
@@ -29,6 +29,7 @@ public class AdminController {
     public void initialize() {
         userList = useCase.getUsers();
         userObservableList.setAll(userList);
+        userListView.setItems(userObservableList);
     }
 
     public void onAddUserButtonClicked() {
