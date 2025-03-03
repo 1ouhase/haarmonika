@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage primarystage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("AdminView.fxml"));
         Parent root = fxmlLoader.load();
         primarystage.setTitle("HårMonica's frisørsalon");
         primarystage.setScene(new Scene(root));
@@ -19,6 +19,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+    UseCase useCase = new UseCase();
+    useCase.sendEmails();
         launch();
     }
 }
