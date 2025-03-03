@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,10 +16,10 @@ public class LoginController {
     UseCase useCase = new UseCase();
 
     @FXML
-    private TextField username;
+    private TextArea username;
 
     @FXML
-    private TextField password;
+    private TextArea password;
 
     @FXML
     public void login(ActionEvent event) throws IOException {
@@ -40,7 +41,7 @@ public class LoginController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
         Parent root = fxmlLoader.load();
         MainController mainController = fxmlLoader.getController();
-//        mainController.setUser(username.getText());
+        mainController.setUser(username.getText());
         Stage stage = (Stage) username.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
