@@ -31,7 +31,7 @@ public class LoginController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-//            alert.setContentText(login);
+            alert.setContentText("Brugernavn eller adgangskode forkert");
             alert.showAndWait();
         }
     }

@@ -100,7 +100,7 @@ public class DatabaseManager {
 
     public static Boolean checkUser(String username, String pass) {
         Boolean ok;
-        String sql = "SELECT * FROM frisør WHERE navn=? AND password=?";
+        String sql = "SELECT * FROM person WHERE navn=? AND password=?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);
