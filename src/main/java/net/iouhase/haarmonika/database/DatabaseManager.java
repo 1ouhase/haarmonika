@@ -26,8 +26,9 @@ public class DatabaseManager {
             statement.setInt(1, 1);
             statement.setDate(2, Date.valueOf(LocalDate.now()));
             statement.setTime(3, Time.valueOf(LocalTime.now()));
-            statement.setString(4, "Niklas");
+            statement.setString(4, "Monika");
             statement.setBoolean(5, false);
+            statement.execute();
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
@@ -37,6 +38,7 @@ public class DatabaseManager {
         Connection connection = connect();
         try{
             PreparedStatement statement = connection.prepareStatement("update booking set Aflysning = true");
+            statement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -44,7 +46,8 @@ public class DatabaseManager {
 
     public static void editBooking() throws SQLException {
         try (Connection connection = connect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("update booking set Dato = ?, Tidspunkt = ?, Navn = ?, Aflysning = ? where idBooking = ?");
+            PreparedStatement statement = connection.prepareStatement("update booking set Dato = ?, Tidspunkt = ?, Navn = ?, Aflysning = ? where idBooking = ?");
+            statement.execute();
         }
     }
 
