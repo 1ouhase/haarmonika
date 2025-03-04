@@ -46,7 +46,8 @@ public class AdminController {
             String name = nameField.getText();
             String password = passwordField.getText();
             String email = emailField.getText();
-            textLabel.setText(useCase.addUser(name, password, email));
+            String type = typeField.getText();
+            textLabel.setText(useCase.addUser(name, password, email, type));
             initialize();
         }
         else if (nameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
@@ -83,7 +84,8 @@ public class AdminController {
                 String name = nameField.getText();
                 String password = passwordField.getText();
                 String email = emailField.getText();
-                textLabel.setText(useCase.updateUser(name, password, oldName, email));
+                String type = typeField.getText();
+                textLabel.setText(useCase.updateUser(name, password, oldName, email, type));
                 initialize();
             } else if (oldName != null) {
                 nameField.setText(oldName);
@@ -109,14 +111,6 @@ public class AdminController {
             else {
                 textLabel.setText(useCase.notifyOfBooking(email));
             }
-//            if (!emailField.getText().isEmpty()) {
-//                String email = emailField.getText();
-//                textLabel.setText(useCase.notifyOfBooking(email));
-//                initialize();
-//            } else if (oldName != null) {
-//                nameField.setText(oldName);
-//                emailField.setText(email);
-//            }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fejl");

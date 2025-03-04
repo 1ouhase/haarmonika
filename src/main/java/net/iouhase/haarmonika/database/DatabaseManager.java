@@ -68,12 +68,13 @@ public class DatabaseManager {
         return usernames;
     }
         public static String addUser(User user) {
-            String sql = "insert into Person (Navn, Password, Email) values (?, ?, ?)";
+            String sql = "insert into Person (Navn, Password, Email, Type) values (?, ?, ?)";
             try (Connection connection = connect();
                  PreparedStatement preparedStatement = connection.prepareStatement(sql)){
                 preparedStatement.setString(1, user.getUsername());
                 preparedStatement.setString(2, user.getPassword());
                 preparedStatement.setString(3, user.getEmail());
+                preparedStatement.setString(4, user.getType());
                 int rowsInserted = preparedStatement.executeUpdate();
                 if (rowsInserted > 0) {
                     return (user.getUsername() + " added");
@@ -125,14 +126,15 @@ public class DatabaseManager {
         }
         return "Bruger slettet";
     }
-    public static String updateUser(String username, String password, String oldName, String email) {
-        String sql = "update Person set Navn=?, Password=?, Email=? where Navn=?";
+    public static String updateUser(String username, String password, String oldName, String email, String type) {
+        String sql = "update Person set Navn=?, Password=?, Email=?, Type=? where Navn=?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
-            preparedStatement.setString(4, oldName);
+            preparedStatement.setString(4, type);
+            preparedStatement.setString(5, oldName);
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
                 return (username + " updated");

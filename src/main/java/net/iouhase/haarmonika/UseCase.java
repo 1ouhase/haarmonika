@@ -1,7 +1,7 @@
 package net.iouhase.haarmonika;
 
 import net.iouhase.haarmonika.database.DatabaseManager;
-import net.iouhase.haarmonika.model.LoginManager;
+import net.iouhase.haarmonika.model.Email;
 import net.iouhase.haarmonika.model.User;
 
 import java.sql.Time;
@@ -10,8 +10,9 @@ import java.util.*;
 
 public class UseCase {
     public boolean checkUser(String username, String password) {
-        LoginManager loginManager = new LoginManager();
-        return loginManager.checkUser(username, password);
+//        LoginManager loginManager = new LoginManager();
+//        return loginManager.checkUser(username, password);
+        return DatabaseManager.checkUser(username, password);
     }
 
     public List<String> getUsers() {
@@ -19,15 +20,15 @@ public class UseCase {
         return users;
     }
 
-    public String addUser(String username, String password, String email) {
-        User user = new User(username, password, email);
+    public String addUser(String username, String password, String email, String type) {
+        User user = new User(username, password, email, type);
         return DatabaseManager.addUser(user);
     }
     public String removeUser(String username) {
         return DatabaseManager.removeUser(username);
     }
-    public String updateUser(String username, String password, String oldName, String email) {
-        return DatabaseManager.updateUser(username, password, oldName, email);
+    public String updateUser(String username, String password, String oldName, String email, String type) {
+        return DatabaseManager.updateUser(username, password, oldName, email, type);
     }
     public String notifyOfBooking(String email) {//Sender når man trykker i adminView
         System.out.println("Husk din tid hos HårMonika, " + email + " " + DatabaseManager.getTime(email));

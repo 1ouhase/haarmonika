@@ -29,10 +29,19 @@ public class User {
 
     private String password;
     private String email;
-    public User(String username, String password, String email) {
+    private String type;
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getType() {
+        return type;
+    }
+    public User(String username, String password, String email, String type) {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.type = type;
 
     }
 }

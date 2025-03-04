@@ -1,4 +1,6 @@
-package net.iouhase.haarmonika;
+package net.iouhase.haarmonika.model;
+
+import net.iouhase.haarmonika.UseCase;
 
 import java.util.TimerTask;
 
