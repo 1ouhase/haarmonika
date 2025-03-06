@@ -26,8 +26,9 @@ public class DatabaseManager {
             statement.setInt(1, 1);
             statement.setDate(2, Date.valueOf(LocalDate.now()));
             statement.setTime(3, Time.valueOf(LocalTime.now()));
-            statement.setString(4, "Niklas");
+            statement.setString(4, "Monika");
             statement.setBoolean(5, false);
+            statement.execute();
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
@@ -37,6 +38,7 @@ public class DatabaseManager {
         Connection connection = connect();
         try{
             PreparedStatement statement = connection.prepareStatement("update booking set Aflysning = true");
+            statement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -44,59 +46,51 @@ public class DatabaseManager {
 
     public static void editBooking() throws SQLException {
         try (Connection connection = connect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("update booking set Dato = ?, Tidspunkt = ?, Navn = ?, Aflysning = ? where idBooking = ?");
+            PreparedStatement statement = connection.prepareStatement("update booking set Dato = ?, Tidspunkt = ?, Navn = ?, Aflysning = ? where idBooking = ?");
+            statement.execute();
         }
     }
 
 
     public static List<String> getUsers() {
-        String sql = "select * from frisør";
+        String sql = "select * from Person";
         List<String> usernames = new ArrayList<>();
         try (Connection connection = connect();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("navn");
-                usernames.add(name);
+//                int id = resultSet.getInt("idPerson");
+                String name = resultSet.getString("Navn");
+                String email = resultSet.getString("Email");
+                String type = resultSet.getString("Type");
+                usernames.add(name + ", " + email + ", " + type);
             }
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return usernames;
     }
-        //    public static Map<Integer, String> getUsers() {
-//        String sql = "select * from users";
-//        Map<Integer, String> users = new HashMap<Integer, String>();
-//        try (Connection connection = connect();
-//        Statement statement = connect().createStatement();
-//        ResultSet resultSet = statement.executeQuery(sql)){
-//            while (resultSet.next()) {
-//                users.put(resultSet.getInt(1), resultSet.getString(2));
-//            }
-//        }catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-    public static String addUser(String userName, String password) {
-        String sql = "insert into frisør (navn, password) values (?, ?)";
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1, userName);
-            preparedStatement.setString(2, password);
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                return (userName + " added");
-            }
-            else {
-                return (userName + " not added");
-            }
+        public static String addUser(User user) {
+            String sql = "insert into Person (Navn, Password, Email, Type) values (?, ?, ?)";
+            try (Connection connection = connect();
+                 PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                preparedStatement.setString(1, user.getUsername());
+                preparedStatement.setString(2, user.getPassword());
+                preparedStatement.setString(3, user.getEmail());
+                preparedStatement.setString(4, user.getType());
+                int rowsInserted = preparedStatement.executeUpdate();
+                if (rowsInserted > 0) {
+                    return (user.getUsername() + " added");
+                }
+                else {
+                    return (user.getUsername() + " not added");
+                }
 
-        }catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return (userName + " not added");
+            }catch (SQLException e) {
+                System.out.println(e.getMessage());
+                return (user.getUsername() + " not added");
+            }
         }
-    }
 
     public static Boolean checkUser(String username, String pass) {
         Boolean ok;
@@ -108,10 +102,6 @@ public class DatabaseManager {
             ResultSet resultSet = preparedStatement.executeQuery();
             System.out.println("checking database");
             if (resultSet.next()) {
-//                String userName = resultSet.getString("username");
-//                String password = resultSet.getString("password");
-//                user = new User(userName, password);
-//                System.out.println(userName + ": OK");
                 ok = true;
                 return ok;
             }
@@ -122,7 +112,7 @@ public class DatabaseManager {
         return false;
     }
     public static String removeUser(String username) {
-        String sql = "DELETE FROM frisør WHERE navn=?";
+        String sql = "DELETE FROM Person WHERE Navn=?";
         try(Connection connection = connect();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);
@@ -139,13 +129,15 @@ public class DatabaseManager {
         }
         return "Bruger slettet";
     }
-    public static String updateUser(String username, String password, String oldName) {
-        String sql = "update frisør set navn=?, password=? where navn=?";
+    public static String updateUser(String username, String password, String oldName, String email, String type) {
+        String sql = "update Person set Navn=?, Password=?, Email=?, Type=? where Navn=?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
-            preparedStatement.setString(3, oldName);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, type);
+            preparedStatement.setString(5, oldName);
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
                 return (username + " updated");
@@ -158,5 +150,41 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getTime(String email){
+        String sql = "SELECT dato, tidspunkt FROM booking Join Person on booking.FKKunde = Person.idPerson where Email = ? limit 1";
+        try(Connection connection = connect();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String date = resultSet.getString("Dato");
+                String time = resultSet.getString("Tidspunkt");
+                return date + ", kl " + time;
+            }
+        }
+        catch (SQLException e){
+        }
+        return null;
+    }
+    public static List<String> getTomorrowsAppointments(String fortnite){
+        List<String> tomorrows = new ArrayList<>();
+        String sql = "SELECT dato, tidspunkt, Email FROM booking Join Person on booking.FKKunde = Person.idPerson Where dato = ?";
+        try(Connection connection = connect();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1, fortnite);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String date = resultSet.getString("Dato");
+                String time = resultSet.getString("Tidspunkt");
+                String email = resultSet.getString("Email");
+                tomorrows.add(date + ", " + time + ", " + email);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return tomorrows;
     }
 }
