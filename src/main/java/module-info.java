@@ -11,6 +11,7 @@ module net.iouhase.haarmonika {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
+    requires java.desktop;
 
     opens net.iouhase.haarmonika to javafx.fxml;
     exports net.iouhase.haarmonika;
