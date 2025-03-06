@@ -1,5 +1,6 @@
 package net.iouhase.haarmonika.database;
 
+import net.iouhase.haarmonika.model.Booking;
 import net.iouhase.haarmonika.model.User;
 
 import java.sql.*;
@@ -19,7 +20,7 @@ public class DatabaseManager {
         connection = DriverManager.getConnection("jdbc:mysql://iouhase.net:3306/hår", "user", "26Uj96MSlPMV4o3aHqIypWcu");
         return connection;
     }
-    public static void addBooking() throws SQLException {
+    public static void addBooking(Booking booking) throws SQLException {
         Connection connection = connect();
         try {
             PreparedStatement statement = connection.prepareStatement("insert into booking (idBooking, Dato, Tidspunkt, Navn, Aflysning) VALUES (?, ?, ?, ?, ?)");
