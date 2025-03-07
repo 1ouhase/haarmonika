@@ -20,7 +20,7 @@ public class DatabaseManager {
         connection = DriverManager.getConnection("jdbc:mysql://iouhase.net:3306/hår", "user", "26Uj96MSlPMV4o3aHqIypWcu");
         return connection;
     }
-    public static void addBooking(Booking booking) throws SQLException {
+    public static void addBooking() throws SQLException {
         Connection connection = connect();
         try {
             PreparedStatement statement = connection.prepareStatement("insert into booking (idBooking, Dato, Tidspunkt, Navn, Aflysning) VALUES (?, ?, ?, ?, ?)");
@@ -52,6 +52,44 @@ public class DatabaseManager {
         }
     }
 
+    public static ArrayList<Booking> getBookings() throws SQLException {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Connection connection = connect();
+        PreparedStatement statement = connection.prepareStatement(
+                "select idBooking, Dato, Tidspunkt, Navn, Aflysning from booking inner join Person on booking.FKKunde = Person.idPerson");
+        statement.execute();
+        ResultSet resultSet = statement.getResultSet();
+        while (resultSet.next()) {
+            int idBooking = resultSet.getInt("idBooking");
+            Date date = resultSet.getDate("Dato");
+            Time time = resultSet.getTime("Tidspunkt");
+            String Navn = resultSet.getString("Person.Navn");
+            boolean aflysning = resultSet.getBoolean("Aflysning");
+
+            bookings.add(new Booking(idBooking, date, time, null, null, Navn, null, aflysning));
+        }
+        PreparedStatement statement1 = connection.prepareStatement("select Navn from booking inner join Person on booking.FKFrisør = Person.idPerson");
+        PreparedStatement statement2 = connection.prepareStatement("select Navn, Varighed from booking inner join Typer on booking.FKType = Typer.idTyper");
+        statement1.execute();
+        statement2.execute();
+        ResultSet resultSet1 = statement1.getResultSet();
+        ResultSet resultSet2 = statement2.getResultSet();
+        int pos = 0;
+        while (resultSet1.next()) {
+            String Navn = resultSet1.getString("Navn");
+            bookings.get(pos).setFrisør(Navn);
+            pos++;
+        }
+        pos = 0;
+        while (resultSet2.next()) {
+            String navn = resultSet2.getString("Navn");
+            Time varighed = resultSet2.getTime("Varighed");
+            bookings.get(pos).setType(navn);
+            bookings.get(pos).setVarihed(varighed);
+            pos++;
+        }
+        return bookings;
+    }
 
     public static List<String> getUsers() {
         String sql = "select * from Person";

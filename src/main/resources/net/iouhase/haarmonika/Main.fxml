@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="1200.0" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="net.iouhase.haarmonika.MainController">
+<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="1200.0" spacing="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.iouhase.haarmonika.MainController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -24,22 +24,22 @@
             </VBox>
          </children>
       </HBox>
-      <TableView prefHeight="500.0" prefWidth="1160.0">
+      <TableView fx:id="tableView" prefHeight="500.0" prefWidth="1160.0">
         <columns>
-          <TableColumn prefWidth="150.0" text="dato" />
+          <TableColumn fx:id="dato" prefWidth="150.0" text="dato" />
           <TableColumn minWidth="0.0" prefWidth="0.0" text="tidspunkt" />
-            <TableColumn prefWidth="150.0" text="varihed" />
-            <TableColumn minWidth="0.0" prefWidth="150.0" text="klipstype" />
-            <TableColumn minWidth="0.0" prefWidth="161.0" text="navn" />
-            <TableColumn minWidth="0.0" prefWidth="157.0" text="frisør" />
-            <TableColumn minWidth="0.0" prefWidth="171.0" text="aflyst" />
+            <TableColumn fx:id="tid" prefWidth="150.0" text="tid" />
+            <TableColumn fx:id="varighed" prefWidth="150.0" text="varihed" />
+            <TableColumn fx:id="klipstype" minWidth="0.0" prefWidth="150.0" text="klipstype" />
+            <TableColumn fx:id="navn" minWidth="0.0" prefWidth="150.0" text="navn" />
+            <TableColumn fx:id="frisør" minWidth="0.0" prefWidth="150.0" text="frisør" />
+            <TableColumn fx:id="aflyst" minWidth="0.0" prefWidth="150.0" text="aflyst" />
         </columns>
       </TableView>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
          <children>
-            <Button mnemonicParsing="false" text="opret tid" />
-            <Button mnemonicParsing="false" text="rediger tid" />
-            <Button mnemonicParsing="false" text="admin menu" />
+            <Button fx:id="opretTid" mnemonicParsing="false" onAction="#onOpretTidPressed" text="opret tid" />
+            <Button fx:id="adminButton" mnemonicParsing="false" onAction="#onAdminButtonPressed" text="admin menu" />
          </children>
       </HBox>
    </children>

@@ -44,6 +44,7 @@ public class LoginController {
 //        mainController.setUser(username.getText());
         Stage stage = (Stage) username.getScene().getWindow();
         stage.setScene(new Scene(root));
+        stage.centerOnScreen();
         stage.show();
     }
 }

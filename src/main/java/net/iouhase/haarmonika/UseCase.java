@@ -1,9 +1,11 @@
 package net.iouhase.haarmonika;
 
 import net.iouhase.haarmonika.database.DatabaseManager;
+import net.iouhase.haarmonika.model.Booking;
 import net.iouhase.haarmonika.model.Email;
 import net.iouhase.haarmonika.model.User;
 
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.*;
@@ -43,6 +45,10 @@ public class UseCase {
     public void sendEmails(){
         SchedulerService scheduler = new SchedulerService();
         scheduler.sendEmails();
+    }
+
+    public ArrayList<Booking> getBookings()throws SQLException {
+        return DatabaseManager.getBookings();
     }
 }
 
